@@ -22,6 +22,7 @@ namespace GGit.Forms
             doc.Open(filepath);
             document = doc.Document;
             InitializeComponent();
+            ListInit();
         }
 
         private void ListInit()
@@ -31,6 +32,26 @@ namespace GGit.Forms
 
             list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
             list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "反对沙皇大飒飒东风"));
+
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            list.Add(new GGitHistroy("fdsajgsk-fdswa13fdsa-dsagdsafds", "岁的法国郭德纲大发噶"));
+            listBox1.DataSource = listSource;
         }
 
         public void FadeIn()
