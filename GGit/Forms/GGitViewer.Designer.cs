@@ -35,7 +35,6 @@ namespace GGit.Forms
             this.gH_Canvas1 = new Grasshopper.GUI.Canvas.GH_Canvas();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.materialFlatButton1 = new MaterialSkin.Controls.MaterialFlatButton();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -71,7 +70,6 @@ namespace GGit.Forms
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.richTextBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.materialFlatButton1);
             this.splitContainer1.Panel1.Controls.Add(this.listBox1);
             // 
             // splitContainer1.Panel2
@@ -92,22 +90,6 @@ namespace GGit.Forms
             this.listBox1.Size = new System.Drawing.Size(236, 180);
             this.listBox1.TabIndex = 0;
             this.listBox1.ValueMember = "Message";
-            // 
-            // materialFlatButton1
-            // 
-            this.materialFlatButton1.AutoSize = true;
-            this.materialFlatButton1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButton1.Depth = 0;
-            this.materialFlatButton1.Icon = null;
-            this.materialFlatButton1.Location = new System.Drawing.Point(13, 313);
-            this.materialFlatButton1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButton1.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButton1.Name = "materialFlatButton1";
-            this.materialFlatButton1.Primary = false;
-            this.materialFlatButton1.Size = new System.Drawing.Size(56, 36);
-            this.materialFlatButton1.TabIndex = 2;
-            this.materialFlatButton1.Text = "Load";
-            this.materialFlatButton1.UseVisualStyleBackColor = true;
             // 
             // richTextBox1
             // 
@@ -142,7 +124,6 @@ namespace GGit.Forms
         internal Grasshopper.GUI.Canvas.GH_Canvas gH_Canvas1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         internal System.Windows.Forms.ListBox listBox1;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButton1;
         private RichTextBox richTextBox1;
     }
 }
