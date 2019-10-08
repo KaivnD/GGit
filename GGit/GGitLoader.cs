@@ -6,6 +6,7 @@ using Grasshopper.Kernel;
 using LibGit2Sharp;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -92,8 +93,67 @@ namespace GGit
 
         private void OnDocumentCommit(object sender, EventArgs e)
         {
-            CommitForm commitForm = new CommitForm();
-            commitForm.Show();
+            bool isModified = ActiveCanvas.Document.IsModified;
+            if (isModified)
+            {
+                MessageBox.Show(string.Format("Please save this document first!"));
+            } else
+            {
+                string docPath = ActiveCanvas.Document.FilePath;
+                string status = "";
+                string workDir = "";
+                try
+                {
+                    workDir = getWorkDir(docPath);
+                    using (var repo = new Repository(workDir))
+                    {
+                        foreach (var item in repo.RetrieveStatus(new StatusOptions()))
+                        {
+                            status += item.FilePath;
+                            status += "---";
+                            status += item.State;
+                            status += "\n";
+                        }
+                    }
+                    CommitForm commitForm = new CommitForm();
+                    commitForm.statusBox.Text = status;
+                    commitForm.Show();
+                } catch (Exception err)
+                {
+                    MessageBox.Show(string.Format(err.Message));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Find a dir contains a dir named .git
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string getWorkDir(string path)
+        {
+            if (File.Exists(path) || Directory.Exists(path))
+            {
+                if (!string.Equals(Path.GetDirectoryName(path), null))
+                {
+                    string fileDir = Path.GetDirectoryName(path);
+                    DirectoryInfo dir = new DirectoryInfo(fileDir);
+                    DirectoryInfo[] dirInfos = dir.GetDirectories();
+                    string workDir = string.Empty;
+                    foreach (DirectoryInfo info in dirInfos)
+                    {
+                        if (info.Name == ".git")
+                        {
+                            workDir = fileDir;
+                            break;
+                        }
+                    }
+                    if (string.Equals(workDir, string.Empty)) return getWorkDir(fileDir);
+                    else return workDir;
+                }
+                else throw new Exception(string.Format("This path is not in git repository", path));
+            }
+            else throw new Exception(string.Format("Path '{0}' doesn't exists !", path));
         }
 
         private void OnClick(object sender, EventArgs e)

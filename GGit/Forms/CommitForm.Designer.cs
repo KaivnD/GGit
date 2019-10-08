@@ -28,14 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.statusBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
+            // 
+            // statusBox
+            // 
+            this.statusBox.Location = new System.Drawing.Point(12, 12);
+            this.statusBox.Name = "statusBox";
+            this.statusBox.ReadOnly = true;
+            this.statusBox.Size = new System.Drawing.Size(260, 142);
+            this.statusBox.TabIndex = 0;
+            this.statusBox.Text = "";
             // 
             // CommitForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 692);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ClientSize = new System.Drawing.Size(284, 461);
+            this.Controls.Add(this.statusBox);
             this.MaximizeBox = false;
             this.Name = "CommitForm";
             this.ShowIcon = false;
@@ -46,5 +56,7 @@
         }
 
         #endregion
+
+        public System.Windows.Forms.RichTextBox statusBox;
     }
 }
