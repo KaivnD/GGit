@@ -16,6 +16,7 @@ namespace GGit.Forms
 {
     public partial class CommitForm : Form
     {
+        private string _workdir { set; get; }
         private string _filePath { set; get; }
         private List<GStatus> statuses = new List<GStatus>();
 
@@ -28,15 +29,14 @@ namespace GGit.Forms
 
         private void StatusInit()
         {
-            string workDir = "";
             try
             {
-                workDir = getWorkDir(_filePath);
-                using (var repo = new Repository(workDir))
+                _workdir = getWorkDir(_filePath);
+                using (var repo = new Repository(_workdir))
                 {
                     foreach (var item in repo.RetrieveStatus(new StatusOptions()))
                     {
-                        statuses.Add(new GStatus(workDir, item.FilePath, Convert.ToInt32(item.State)));
+                        statuses.Add(new GStatus(_workdir, item.FilePath, Convert.ToInt32(item.State), Staged(item.FilePath)));
                     }
                 }
                 statusList.SetObjects(statuses);
@@ -46,6 +46,34 @@ namespace GGit.Forms
             {
                 MessageBox.Show(string.Format(err.Message));
             }
+        }
+
+        /// <summary>
+        /// TO DO make it more resonable
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool Staged(string path)
+        {
+            using (var repo = new Repository(_workdir))
+            {
+                foreach (IndexEntry ie in repo.Index.ToArray())
+                {
+                    if (Equals(path, ie.Path))
+                    {
+                        try
+                        {
+                            GitObject hash = repo.Head.Tip[ie.Path].Target;
+                            return hash.Id != ie.Id;
+                        }
+                        catch
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private void OnStatusBtnClick (object sender, CellClickEventArgs e)

@@ -12,23 +12,25 @@ namespace GGit.Utils
     {
         public string Path { get; set; }
         public string Status { get; set; }
-        private int _status { get; set; }
         public string Stage {get; set; }
         public string Discard { get; set; }
-        
+        private int _status { get; set; }
+        private bool _staged { get; set; }
+
         private string _workdir { get; set; }
-        public GStatus(string workdir, string path, int status)
+        public GStatus(string workdir, string path, int status, bool staged)
         {
             _workdir = workdir;
             Path = path;
             _status = status;
-            Status = "Change";
+            _staged = staged;
+            Status = _staged ? "Staged" : "Change";
             SetBtn();
         }
 
         private void SetBtn()
         {
-            Stage = "Staged" == Status ? "-" : "+";
+            Stage = _staged ? "-" : "+";
             Discard = "×";
         }
 
@@ -41,6 +43,7 @@ namespace GGit.Utils
                     Commands.Stage(repo, Path);
                 }
                 Status = "Staged";
+                _staged = true;
                 SetBtn();
             } catch (Exception err)
             {
@@ -59,6 +62,7 @@ namespace GGit.Utils
                     Commands.Unstage(repo, Path);
                 }
                 Status = "Change";
+                _staged = false;
                 SetBtn();
             }
             catch (Exception err)
