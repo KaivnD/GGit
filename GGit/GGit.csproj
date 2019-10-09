@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Utils\GGitHistroy.cs" />
     <Compile Include="Utils\GStatus.cs" />
+    <Compile Include="Utils\Tools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

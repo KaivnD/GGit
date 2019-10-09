@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using static Grasshopper.Instances;
+using static GGit.Utils.Tools;
 
 namespace GGit
 {
@@ -57,7 +58,7 @@ namespace GGit
                     ToolStripMenuItem customItem = new ToolStripMenuItem("GGit");
                     ToolStripMenuItem init = new ToolStripMenuItem("Init", Properties.Resources.git, OnInitRepository);
                     ToolStripMenuItem commit = new ToolStripMenuItem("Commit", Properties.Resources.git, OnDocumentCommit);
-                    ToolStripMenuItem push = new ToolStripMenuItem("Push", Properties.Resources.git, OnDocumentCommit);
+                    ToolStripMenuItem push = new ToolStripMenuItem("Push", Properties.Resources.git, OnDocumentPush);
                     ToolStripMenuItem clone = new ToolStripMenuItem("Clone", Properties.Resources.git, OnDocumentCommit);
 
                     commit.ShortcutKeys = Keys.Control | Keys.K;
@@ -81,6 +82,47 @@ namespace GGit
                 }
             }
             _menuAdded = true;
+        }
+
+        private void OnDocumentPush(object sender, EventArgs e)
+        {
+            if (ActiveCanvas.Document == null) return;
+            try
+            {
+                string docPath = ActiveCanvas.Document.FilePath;
+                using (var repo = new Repository(getWorkDir(docPath)))
+                {
+                    if (repo.Network.Remotes["origin"] == null)
+                    {
+                        // TO DO Set remote url form
+                        repo.Network.Remotes.Add("origin", "https://github.com/KaivnD/Gt.git");
+                        return;
+                    }
+
+                    Remote remote = repo.Network.Remotes["origin"];
+
+                    var options = new PushOptions();
+                    options.CredentialsProvider = (_url, _user, _cred) =>
+                        new UsernamePasswordCredentials
+                        {
+                            // TO DO Set AccessToken From
+                            Username = "the-access-token", // YOUR TOKEN HERE
+                            Password = string.Empty
+                        };
+
+                    // TO DO If get AcessToken Faild or accesstoken didn't work pop a form input
+                    // TO DO remove to tools
+                    GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+                    string username = sserver.GetValue("author", "nobody");
+                    string email = sserver.GetValue("email", "nobody@nobody.com");
+                    Signature author = new Signature(username, email, DateTime.Now);
+                    repo.Network.Push(remote, @"refs/heads/master", options);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void OnInitRepository(object sender, EventArgs e)
