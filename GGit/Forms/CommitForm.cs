@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static GGit.Utils.Tools;
 
 namespace GGit.Forms
 {
@@ -106,37 +107,6 @@ namespace GGit.Forms
             }
         }
 
-        /// <summary>
-        /// Find a dir contains a dir named .git
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private string getWorkDir(string path)
-        {
-            if (File.Exists(path) || Directory.Exists(path))
-            {
-                if (!string.Equals(Path.GetDirectoryName(path), null))
-                {
-                    string fileDir = Path.GetDirectoryName(path);
-                    DirectoryInfo dir = new DirectoryInfo(fileDir);
-                    DirectoryInfo[] dirInfos = dir.GetDirectories();
-                    string workDir = string.Empty;
-                    foreach (DirectoryInfo info in dirInfos)
-                    {
-                        if (info.Name == ".git")
-                        {
-                            workDir = fileDir;
-                            break;
-                        }
-                    }
-                    if (string.Equals(workDir, string.Empty)) return getWorkDir(fileDir);
-                    else return workDir;
-                }
-                else throw new Exception(string.Format("This path is not in git repository", path));
-            }
-            else throw new Exception(string.Format("Path '{0}' doesn't exists !", path));
-        }
-
         private void commitBtn_Click(object sender, EventArgs e)
         {
             if (commitMsgInput.Text != "")
@@ -145,6 +115,7 @@ namespace GGit.Forms
                 {
                     using (var repo = new Repository(_workdir))
                     {
+                        // TO DO remove to tools
                         GH_SettingsServer sserver = new GH_SettingsServer("ggit");
                         string username = sserver.GetValue("author", "nobody");
                         string email = sserver.GetValue("email", "nobody@nobody.com");
