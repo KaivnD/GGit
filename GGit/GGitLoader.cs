@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using static Grasshopper.Instances;
 using static GGit.Utils.Tools;
+using System.Threading.Tasks;
 
 namespace GGit
 {
@@ -58,7 +59,7 @@ namespace GGit
                     ToolStripMenuItem customItem = new ToolStripMenuItem("GGit");
                     ToolStripMenuItem init = new ToolStripMenuItem("Init", Properties.Resources.git, OnInitRepository);
                     ToolStripMenuItem commit = new ToolStripMenuItem("Commit", Properties.Resources.git, OnDocumentCommit);
-                    ToolStripMenuItem push = new ToolStripMenuItem("Push", Properties.Resources.git, OnDocumentPush);
+                    ToolStripMenuItem push = new ToolStripMenuItem("Push", Properties.Resources.git, OnPush);
                     ToolStripMenuItem clone = new ToolStripMenuItem("Clone", Properties.Resources.git, OnDocumentCommit);
 
                     commit.ShortcutKeys = Keys.Control | Keys.K;
@@ -84,8 +85,18 @@ namespace GGit
             _menuAdded = true;
         }
 
-        private void OnDocumentPush(object sender, EventArgs e)
+        private async void OnPush(object sender, EventArgs e)
         {
+            LoadingForm loadingForm = new LoadingForm();
+            loadingForm.Show();
+
+            await Task.Run(() => DocumentPush());
+            loadingForm.Close();
+        }
+
+        private void DocumentPush()
+        {
+
             if (ActiveCanvas.Document == null) return;
             try
             {
@@ -106,16 +117,13 @@ namespace GGit
                         new UsernamePasswordCredentials
                         {
                             // TO DO Set AccessToken From
-                            Username = "the-access-token", // YOUR TOKEN HERE
+                            Username = "", // YOUR TOKEN HERE
                             Password = string.Empty
                         };
 
                     // TO DO If get AcessToken Faild or accesstoken didn't work pop a form input
-                    // TO DO remove to tools
-                    GH_SettingsServer sserver = new GH_SettingsServer("ggit");
-                    string username = sserver.GetValue("author", "nobody");
-                    string email = sserver.GetValue("email", "nobody@nobody.com");
-                    Signature author = new Signature(username, email, DateTime.Now);
+
+                    Signature author = getSignature();
                     repo.Network.Push(remote, @"refs/heads/master", options);
                 }
             }
@@ -142,10 +150,7 @@ namespace GGit
 
         private void OnDocumentCommit(object sender, EventArgs e)
         {
-            GH_SettingsServer sserver = new GH_SettingsServer("ggit");
-            string author = sserver.GetValue("author", "");
-            string email = sserver.GetValue("email", "");
-            if (author == "" || email == "")
+            if (getSignature() == null)
             {
                 MessageBox.Show(string.Format("Please tell git who you are!"));
                 SignatureConfig conform = new SignatureConfig();
