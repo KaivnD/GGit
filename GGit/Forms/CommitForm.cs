@@ -32,19 +32,25 @@ namespace GGit.Forms
             try
             {
                 _workdir = getWorkDir(_filePath);
-                using (var repo = new Repository(_workdir))
-                {
-                    foreach (var item in repo.RetrieveStatus(new StatusOptions()))
-                    {
-                        statuses.Add(new GStatus(_workdir, item.FilePath, Convert.ToInt32(item.State), Staged(item.FilePath)));
-                    }
-                }
+                RetrieveStatus();
                 statusList.SetObjects(statuses);
                 statusList.ButtonClick += OnStatusBtnClick;
             }
             catch (Exception err)
             {
                 MessageBox.Show(string.Format(err.Message));
+            }
+        }
+
+        private void RetrieveStatus()
+        {
+            statuses.Clear();
+            using (var repo = new Repository(_workdir))
+            {
+                foreach (var item in repo.RetrieveStatus(new StatusOptions()))
+                {
+                    statuses.Add(new GStatus(_workdir, item.FilePath, Convert.ToInt32(item.State), Staged(item.FilePath)));
+                }
             }
         }
 
@@ -128,6 +134,44 @@ namespace GGit.Forms
                 else throw new Exception(string.Format("This path is not in git repository", path));
             }
             else throw new Exception(string.Format("Path '{0}' doesn't exists !", path));
+        }
+
+        private void commitBtn_Click(object sender, EventArgs e)
+        {
+            if (commitMsgInput.Text != "")
+            {
+                try
+                {
+                    using (var repo = new Repository(_workdir))
+                    {
+                        Signature author = new Signature("KaivnD", "KaivnD@hotmail", DateTime.Now);
+                        Signature committer = author;
+                        repo.Commit(commitMsgInput.Text, author, committer);
+                    }
+                    RetrieveStatus();
+                    statusList.SetObjects(statuses);
+                    commitMsgInput.Text = "";
+                    MessageBox.Show("Commit success !");
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(string.Format("Commit Failed: {0}", err.Message));
+                }
+            } else MessageBox.Show("Please input commit message !");
+        }
+
+        private void stageAllBtn_Click(object sender, EventArgs e)
+        {
+            statuses.ForEach(x => x.StageFile());
+            RetrieveStatus();
+            statusList.SetObjects(statuses);
+        }
+
+        private void unstageAllBtn_Click(object sender, EventArgs e)
+        {
+            statuses.ForEach(x => x.UnStageFile());
+            RetrieveStatus();
+            statusList.SetObjects(statuses);
         }
     }
 }

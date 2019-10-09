@@ -33,6 +33,10 @@
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.commitMsgInput = new System.Windows.Forms.RichTextBox();
+            this.commitBtn = new System.Windows.Forms.Button();
+            this.stageAllBtn = new System.Windows.Forms.Button();
+            this.unstageAllBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.statusList)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +60,7 @@
             this.statusList.Location = new System.Drawing.Point(0, 0);
             this.statusList.Margin = new System.Windows.Forms.Padding(0);
             this.statusList.Name = "statusList";
-            this.statusList.Size = new System.Drawing.Size(283, 200);
+            this.statusList.Size = new System.Drawing.Size(283, 312);
             this.statusList.TabIndex = 1;
             this.statusList.UseCompatibleStateImageBehavior = false;
             this.statusList.View = System.Windows.Forms.View.Details;
@@ -108,12 +112,63 @@
             this.olvColumn3.UseFiltering = false;
             this.olvColumn3.Width = 25;
             // 
+            // commitMsgInput
+            // 
+            this.commitMsgInput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.commitMsgInput.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.commitMsgInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.commitMsgInput.Location = new System.Drawing.Point(12, 353);
+            this.commitMsgInput.Name = "commitMsgInput";
+            this.commitMsgInput.Size = new System.Drawing.Size(260, 96);
+            this.commitMsgInput.TabIndex = 2;
+            this.commitMsgInput.Text = "";
+            // 
+            // commitBtn
+            // 
+            this.commitBtn.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.commitBtn.ForeColor = System.Drawing.Color.Black;
+            this.commitBtn.Location = new System.Drawing.Point(197, 322);
+            this.commitBtn.Name = "commitBtn";
+            this.commitBtn.Size = new System.Drawing.Size(75, 25);
+            this.commitBtn.TabIndex = 3;
+            this.commitBtn.Text = "Commit";
+            this.commitBtn.UseVisualStyleBackColor = true;
+            this.commitBtn.Click += new System.EventHandler(this.commitBtn_Click);
+            // 
+            // stageAllBtn
+            // 
+            this.stageAllBtn.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.stageAllBtn.ForeColor = System.Drawing.Color.Black;
+            this.stageAllBtn.Location = new System.Drawing.Point(12, 322);
+            this.stageAllBtn.Name = "stageAllBtn";
+            this.stageAllBtn.Size = new System.Drawing.Size(75, 25);
+            this.stageAllBtn.TabIndex = 4;
+            this.stageAllBtn.Text = "Stage All";
+            this.stageAllBtn.UseVisualStyleBackColor = true;
+            this.stageAllBtn.Click += new System.EventHandler(this.stageAllBtn_Click);
+            // 
+            // unstageAllBtn
+            // 
+            this.unstageAllBtn.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.unstageAllBtn.ForeColor = System.Drawing.Color.Black;
+            this.unstageAllBtn.Location = new System.Drawing.Point(94, 322);
+            this.unstageAllBtn.Name = "unstageAllBtn";
+            this.unstageAllBtn.Size = new System.Drawing.Size(97, 25);
+            this.unstageAllBtn.TabIndex = 5;
+            this.unstageAllBtn.Text = "Unstage All";
+            this.unstageAllBtn.UseVisualStyleBackColor = true;
+            this.unstageAllBtn.Click += new System.EventHandler(this.unstageAllBtn_Click);
+            // 
             // CommitForm
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Pane;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 461);
+            this.Controls.Add(this.unstageAllBtn);
+            this.Controls.Add(this.stageAllBtn);
+            this.Controls.Add(this.commitBtn);
+            this.Controls.Add(this.commitMsgInput);
             this.Controls.Add(this.statusList);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -121,6 +176,7 @@
             this.Name = "CommitForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Commit";
             ((System.ComponentModel.ISupportInitialize)(this.statusList)).EndInit();
             this.ResumeLayout(false);
@@ -133,5 +189,9 @@
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;
         private BrightIdeasSoftware.OLVColumn olvColumn4;
+        private System.Windows.Forms.RichTextBox commitMsgInput;
+        private System.Windows.Forms.Button commitBtn;
+        private System.Windows.Forms.Button stageAllBtn;
+        private System.Windows.Forms.Button unstageAllBtn;
     }
 }

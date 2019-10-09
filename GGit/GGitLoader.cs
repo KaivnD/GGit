@@ -102,6 +102,8 @@ namespace GGit
             {
                 string docPath = ActiveCanvas.Document.FilePath;
                 CommitForm commitForm = new CommitForm(docPath);
+
+                GH_WindowsFormUtil.CenterFormOnCursor(commitForm, true);
                 commitForm.Show();
             }
         }
