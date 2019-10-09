@@ -115,11 +115,7 @@ namespace GGit.Forms
                 {
                     using (var repo = new Repository(_workdir))
                     {
-                        // TO DO remove to tools
-                        GH_SettingsServer sserver = new GH_SettingsServer("ggit");
-                        string username = sserver.GetValue("author", "nobody");
-                        string email = sserver.GetValue("email", "nobody@nobody.com");
-                        Signature author = new Signature(username, email, DateTime.Now);
+                        Signature author = getSignature();
                         Signature committer = author;
                         repo.Commit(commitMsgInput.Text, author, committer);
                     }
@@ -127,6 +123,7 @@ namespace GGit.Forms
                     statusList.SetObjects(statuses);
                     commitMsgInput.Text = "";
                     MessageBox.Show("Commit success !");
+                    Close();
                 }
                 catch (Exception err)
                 {

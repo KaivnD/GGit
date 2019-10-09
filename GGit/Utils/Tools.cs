@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Grasshopper.Kernel;
+using LibGit2Sharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +11,18 @@ namespace GGit.Utils
 {
     public static class Tools
     {
+        public static Signature getSignature()
+        {
+            GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+            string username = sserver.GetValue("author", "");
+            string email = sserver.GetValue("email", "");
+            if (username == "" || email == "")
+            {
+                return null;
+            }
+            Signature author = new Signature(username, email, DateTime.Now);
+            return author;
+        }
         /// <summary>
         /// Find a dir contains a dir named .git
         /// </summary>
