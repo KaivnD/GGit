@@ -67,6 +67,11 @@ namespace GGit
                     customItem.DropDown.Items.Add(push);
 
                     customItem.DropDown.Items.Add(new ToolStripSeparator());
+                    ToolStripMenuItem conf = new ToolStripMenuItem("Setting", Properties.Resources.git, (sender, e) => {
+                        SignatureConfig conform = new SignatureConfig();
+                        conform.Show();
+                    });
+                    customItem.DropDown.Items.Add(conf);
                     ToolStripItem toolStripItem4 = customItem.DropDown.Items.Add("NPKG", null, delegate
                     {
                         Process.Start("https://ncf.cz-studio.cn");
@@ -95,6 +100,16 @@ namespace GGit
 
         private void OnDocumentCommit(object sender, EventArgs e)
         {
+            GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+            string author = sserver.GetValue("author", "");
+            string email = sserver.GetValue("email", "");
+            if (author == "" || email == "")
+            {
+                MessageBox.Show(string.Format("Please tell git who you are!"));
+                SignatureConfig conform = new SignatureConfig();
+                conform.Show();
+                return;
+            }
             if (ActiveCanvas.Document == null) return;
             bool isModified = ActiveCanvas.Document.IsModified;
             if (isModified)

@@ -1,5 +1,6 @@
 ﻿using BrightIdeasSoftware;
 using GGit.Utils;
+using Grasshopper.Kernel;
 using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
@@ -144,7 +145,10 @@ namespace GGit.Forms
                 {
                     using (var repo = new Repository(_workdir))
                     {
-                        Signature author = new Signature("KaivnD", "KaivnD@hotmail", DateTime.Now);
+                        GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+                        string username = sserver.GetValue("author", "nobody");
+                        string email = sserver.GetValue("email", "nobody@nobody.com");
+                        Signature author = new Signature(username, email, DateTime.Now);
                         Signature committer = author;
                         repo.Commit(commitMsgInput.Text, author, committer);
                     }
