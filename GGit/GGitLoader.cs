@@ -58,8 +58,10 @@ namespace GGit
                     ToolStripMenuItem init = new ToolStripMenuItem("Init", Properties.Resources.git, OnInitRepository);
                     ToolStripMenuItem commit = new ToolStripMenuItem("Commit", Properties.Resources.git, OnDocumentCommit);
                     ToolStripMenuItem push = new ToolStripMenuItem("Push", Properties.Resources.git, OnDocumentCommit);
-                    //init.Click += OnClick;
+                    ToolStripMenuItem clone = new ToolStripMenuItem("Clone", Properties.Resources.git, OnDocumentCommit);
+
                     commit.ShortcutKeys = Keys.Control | Keys.K;
+                    push.ShortcutKeys = Keys.Control | Keys.Shift | Keys.K;
                     customItem.DropDown.Items.Add(init);
                     customItem.DropDown.Items.Add(commit);
                     customItem.DropDown.Items.Add(push);

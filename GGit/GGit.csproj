@@ -97,6 +97,12 @@
     <Compile Include="Forms\GGitViewer.Designer.cs">
       <DependentUpon>GGitViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SignatureConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SignatureConfig.Designer.cs">
+      <DependentUpon>SignatureConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="GGitInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GGitLoader.cs" />
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GGitViewer.resx">
       <DependentUpon>GGitViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SignatureConfig.resx">
+      <DependentUpon>SignatureConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
