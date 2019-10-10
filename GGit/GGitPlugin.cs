@@ -14,6 +14,7 @@ using static Grasshopper.Instances;
 using static GGit.Utils.Tools;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LibGit2Sharp.Handlers;
 
 namespace GGit
 {
@@ -56,9 +57,10 @@ namespace GGit
                 {
                     ToolStripMenuItem customItem = new ToolStripMenuItem("GGit");
                     ToolStripMenuItem init = new ToolStripMenuItem("Init", null, OnInitRepository);
+                    ToolStripMenuItem clone = new ToolStripMenuItem("Clone", null, OnClone);
                     ToolStripMenuItem commit = new ToolStripMenuItem("Commit", null, OnDocumentCommit);
                     ToolStripMenuItem push = new ToolStripMenuItem("Push", null, OnPush);
-                    ToolStripMenuItem clone = new ToolStripMenuItem("Clone", null, OnClone);
+                    ToolStripMenuItem pull = new ToolStripMenuItem("Pull", null, OnPull);
 
                     // This can allow user set their own shortcut
                     GH_DocumentEditor.AggregateShortcutMenuItems += (sender, e) =>
@@ -69,10 +71,12 @@ namespace GGit
 
                     commit.ShortcutKeys = Keys.Control | Keys.K;
                     push.ShortcutKeys = Keys.Control | Keys.Shift | Keys.K;
+
                     customItem.DropDown.Items.Add(init);
+                    customItem.DropDown.Items.Add(clone);
                     customItem.DropDown.Items.Add(commit);
                     customItem.DropDown.Items.Add(push);
-                    customItem.DropDown.Items.Add(clone);
+                    customItem.DropDown.Items.Add(pull);
 
                     customItem.DropDown.Items.Add(new ToolStripSeparator());
                     ToolStripMenuItem conf = new ToolStripMenuItem("Author", null, OnSettingAuthor);
@@ -88,41 +92,6 @@ namespace GGit
             _menuAdded = true;
         }
 
-        private void OnSettingAuthor(object sender, EventArgs e)
-        {
-            DoubleInput conform = new DoubleInput();
-            conform.Text = "Git author setting";
-            conform.label1.Text = "Username";
-            conform.label2.Text = "E-mail";
-            conform.ConfirmEvent += (sd, author, email) => {
-                if (author == "")
-                {
-                    MessageBox.Show("Username can't be empty.");
-                    return;
-                }
-                if (email == "")
-                {
-                    MessageBox.Show("E-mail can't be empty.");
-                    return;
-                }
-                string reg = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
-                Regex r = new Regex(reg);
-                if (!r.IsMatch(email))
-                {
-                    MessageBox.Show("E-mail is not a email.");
-                    return;
-                }
-
-                GH_SettingsServer sserver = new GH_SettingsServer("ggit");
-                sserver.SetValue("author", author);
-                sserver.SetValue("email", email);
-                sserver.WritePersistentSettings();
-
-                conform.Close();
-            };
-            conform.Show(ActiveCanvas.FindForm());
-        }
-
         private async void OnPush(object sender, EventArgs e)
         {
             LoadingForm loadingForm = new LoadingForm();
@@ -132,21 +101,102 @@ namespace GGit
             loadingForm.Close();
         }
 
-        private async void OnClone(object sender, EventArgs e)
+        private void OnClone(object sender, EventArgs e)
+        {
+            DoubleInput cloneForm = new DoubleInput();
+            cloneForm.Text = "Clone remote repository";
+
+            cloneForm.label1.Text = "Remote Url";
+            cloneForm.label2.Text = "Local Path";
+
+            cloneForm.input2.Cursor = Cursors.Hand;
+            cloneForm.input2.Text = "Click me !";
+            cloneForm.input2.ReadOnly = true;
+            cloneForm.input2.Click += (ed, eg) =>
+            {
+                if (cloneForm.input1.Text == "")
+                {
+                    MessageBox.Show("No remote url found");
+                    return;
+                }
+                FolderBrowserDialog folder = new FolderBrowserDialog();
+                DialogResult res = folder.ShowDialog();
+                if (res == DialogResult.OK || res == DialogResult.Yes)
+                {
+                    Uri uri = new Uri(cloneForm.input1.Text);
+                    string name = uri.Segments[uri.Segments.Length - 1].TrimEnd('/').Split('.')[0];
+                    cloneForm.input2.Text = Path.Combine(@folder.SelectedPath, name);
+                }
+            };
+
+            cloneForm.Show();
+            
+            cloneForm.ConfirmEvent += async (sd, url, path) =>
+            {
+                LoadingForm loadingForm = new LoadingForm();
+                loadingForm.Show(ActiveCanvas.FindForm());
+                await Task.Run(() => CloneRepository(url, path));
+
+                loadingForm.Close();
+                cloneForm.Close();
+                Uri uri = new Uri(url);
+                string name = uri.Segments[uri.Segments.Length - 1].TrimEnd('/').Split('.')[0];
+                MessageBox.Show(string.Format("{0} is Cloned to {1}", name, path));
+            };
+        }
+
+        private void CloneRepository(string url, string path)
+        {
+            try
+            {
+                Repository.Clone(url, path);
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private async void OnPull(object sender, EventArgs e)
         {
             LoadingForm loadingForm = new LoadingForm();
-            loadingForm.Show();
+            loadingForm.Show(ActiveCanvas.FindForm());
 
-            await Task.Run(() => CloneRepository());
+            await Task.Run(() => PullRepository());
             loadingForm.Close();
         }
 
-        private void CloneRepository()
+        private void PullRepository ()
         {
-            CloneOptions options = new CloneOptions();
-            options.CredentialsProvider = (_url, _user, _cred) =>
-            new UsernamePasswordCredentials { Username = "Username", Password = "Password" };
-            Repository.Clone("https://github.com/libgit2/libgit2sharp.git", "path/to/repo", options);
+            if (ActiveCanvas.Document == null) return;
+            string docPath = ActiveCanvas.Document.FilePath;
+
+            try
+            {
+                using (var repo = new Repository(getWorkDir(docPath)))
+                {
+                    GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+                    string token = sserver.GetValue("AccessToken", "");
+                    // Credential information to fetch
+                    PullOptions options = new PullOptions();
+                    options.FetchOptions = new FetchOptions();
+                    options.FetchOptions.CredentialsProvider = (_url, _user, _cred) =>
+                        new UsernamePasswordCredentials
+                        {
+                            // TO DO Set AccessToken From
+                            Username = token,
+                            Password = string.Empty
+                        };
+
+                    // User information to create a merge commit
+                    var signature = getSignature();
+
+                    // Pull
+                    Commands.Pull(repo, signature, options);
+                }
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void DocumentPush()
@@ -299,12 +349,39 @@ namespace GGit
             }
         }
 
-        private void OnClick(object sender, EventArgs e)
+        private void OnSettingAuthor(object sender, EventArgs e)
         {
-            //btn.Bounds.Location;
-            //string filepath = @"C:\Users\KaivnD\Desktop\ss.gh";
-            //GGitViewer vv = new GGitViewer(filepath);
-            //vv.FadeIn();
+            DoubleInput conform = new DoubleInput();
+            conform.Text = "Git author setting";
+            conform.label1.Text = "Username";
+            conform.label2.Text = "E-mail";
+            conform.ConfirmEvent += (sd, author, email) => {
+                if (author == "")
+                {
+                    MessageBox.Show("Username can't be empty.");
+                    return;
+                }
+                if (email == "")
+                {
+                    MessageBox.Show("E-mail can't be empty.");
+                    return;
+                }
+                string reg = @"\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*";
+                Regex r = new Regex(reg);
+                if (!r.IsMatch(email))
+                {
+                    MessageBox.Show("E-mail is not a email.");
+                    return;
+                }
+
+                GH_SettingsServer sserver = new GH_SettingsServer("ggit");
+                sserver.SetValue("author", author);
+                sserver.SetValue("email", email);
+                sserver.WritePersistentSettings();
+
+                conform.Close();
+            };
+            conform.Show(ActiveCanvas.FindForm());
         }
     }
 }

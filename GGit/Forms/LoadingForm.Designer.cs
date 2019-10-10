@@ -40,7 +40,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Pushing......";
+            this.label2.Text = "Loading......";
             // 
             // label1
             // 
