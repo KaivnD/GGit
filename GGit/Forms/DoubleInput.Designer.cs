@@ -1,6 +1,6 @@
 ﻿namespace GGit.Forms
 {
-    partial class SignatureConfig
+    partial class DoubleInput
     {
         /// <summary>
         /// Required designer variable.
@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.authorInput = new System.Windows.Forms.TextBox();
-            this.emailInput = new System.Windows.Forms.TextBox();
+            this.input1 = new System.Windows.Forms.TextBox();
+            this.input2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // authorInput
+            // input1
             // 
-            this.authorInput.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.authorInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.authorInput.Location = new System.Drawing.Point(83, 31);
-            this.authorInput.Name = "authorInput";
-            this.authorInput.Size = new System.Drawing.Size(180, 23);
-            this.authorInput.TabIndex = 0;
+            this.input1.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.input1.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.input1.Location = new System.Drawing.Point(83, 31);
+            this.input1.Name = "input1";
+            this.input1.Size = new System.Drawing.Size(180, 23);
+            this.input1.TabIndex = 0;
             // 
-            // emailInput
+            // input2
             // 
-            this.emailInput.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.emailInput.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.emailInput.Location = new System.Drawing.Point(83, 79);
-            this.emailInput.Name = "emailInput";
-            this.emailInput.Size = new System.Drawing.Size(180, 23);
-            this.emailInput.TabIndex = 1;
+            this.input2.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.input2.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.input2.Location = new System.Drawing.Point(83, 79);
+            this.input2.Name = "input2";
+            this.input2.Size = new System.Drawing.Size(180, 23);
+            this.input2.TabIndex = 1;
             // 
             // label1
             // 
@@ -60,19 +60,19 @@
             this.label1.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(14, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.Size = new System.Drawing.Size(39, 17);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Username";
+            this.label1.Text = "label1";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑 Light", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(22, 82);
+            this.label2.Location = new System.Drawing.Point(14, 82);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 17);
+            this.label2.Size = new System.Drawing.Size(41, 17);
             this.label2.TabIndex = 3;
-            this.label2.Text = "E-Mail";
+            this.label2.Text = "label2";
             // 
             // saveBtn
             // 
@@ -81,7 +81,7 @@
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(75, 25);
             this.saveBtn.TabIndex = 6;
-            this.saveBtn.Text = "Save";
+            this.saveBtn.Text = "Confirm";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
             // 
@@ -96,7 +96,7 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // SignatureConfig
+            // DoubleInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -105,12 +105,14 @@
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.emailInput);
-            this.Controls.Add(this.authorInput);
+            this.Controls.Add(this.input2);
+            this.Controls.Add(this.input1);
             this.MaximizeBox = false;
-            this.Name = "SignatureConfig";
+            this.Name = "DoubleInput";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SignatureConfig";
+            this.Text = "DoubleInput";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,10 +120,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox authorInput;
-        private System.Windows.Forms.TextBox emailInput;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox input1;
+        public System.Windows.Forms.TextBox input2;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Button cancelBtn;
     }
