@@ -92,6 +92,12 @@
     <Compile Include="Forms\CommitForm.Designer.cs">
       <DependentUpon>CommitForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GGitToolbar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GGitToolbar.Designer.cs">
+      <DependentUpon>GGitToolbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GGitViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,13 +110,20 @@
     <Compile Include="Forms\LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SignatureConfig.cs">
+    <Compile Include="Forms\DoubleInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SignatureConfig.Designer.cs">
-      <DependentUpon>SignatureConfig.cs</DependentUpon>
+    <Compile Include="Forms\DoubleInput.Designer.cs">
+      <DependentUpon>DoubleInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SingleInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SingleInput.Designer.cs">
+      <DependentUpon>SingleInput.cs</DependentUpon>
     </Compile>
     <Compile Include="GGitInfo.cs" />
+    <Compile Include="GGitPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GGitLoader.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -129,14 +142,20 @@
     <EmbeddedResource Include="Forms\CommitForm.resx">
       <DependentUpon>CommitForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GGitToolbar.resx">
+      <DependentUpon>GGitToolbar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\GGitViewer.resx">
       <DependentUpon>GGitViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SignatureConfig.resx">
-      <DependentUpon>SignatureConfig.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DoubleInput.resx">
+      <DependentUpon>DoubleInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SingleInput.resx">
+      <DependentUpon>SingleInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -148,6 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Ball-1s-75px.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-git-16-green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
