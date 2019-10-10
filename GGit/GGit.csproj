@@ -92,12 +92,6 @@
     <Compile Include="Forms\CommitForm.Designer.cs">
       <DependentUpon>CommitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GGitToolbar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\GGitToolbar.Designer.cs">
-      <DependentUpon>GGitToolbar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\GGitViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,9 +135,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\CommitForm.resx">
       <DependentUpon>CommitForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GGitToolbar.resx">
-      <DependentUpon>GGitToolbar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GGitViewer.resx">
       <DependentUpon>GGitViewer.cs</DependentUpon>
