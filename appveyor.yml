@@ -6,7 +6,7 @@ build:
   project: GGit.sln
   verbosity: minimal
 after_build:
-- ps: "Get-ChildItem \".\\GGit\\bin\" | ForEach-Object {if($_ -is [IO.fileinfo]){if($_.Extension -ne \".gha\" -and $_.Extension -ne \".dll\") {Remove-item -Force $_.FullName}}}; \n\n Get-ChildItem \".\\GGit\\bin\\lib\" | ForEach-Object {if ($_.Name -ne \"win32\") { Remove-Item -Recurse -Force $_.FullName}}"
+- ps: Get-ChildItem GGit/bin -Recurse | Where-Object {$_.Extension -ne ".gha" -and $_.Extension -ne ".dll" -and $_ -is [io.fileinfo]} | ForEach-Object {Remove-Item -Force -Path $_.FullName};Get-ChildItem GGit/bin/lib | Where-Object {$_.Name -ne "win32"} | Remove-Item -Recurse -Force;
 artifacts:
 - path: GGit/bin
   name: GGit
