@@ -33,11 +33,17 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+## Credit
+
+1. [Grasshopper](https://www.grasshopper3d.com/), which is a wonderful tools for visual programming.
+2. [LibGit2Sharp](https://github.com/libgit2/libgit2sharp), with out their work, this wouldn't exist.
+3. [ObjectListView](https://github.com/drxaero/ObjectListView), provide a very nice list view component for winform, that's awesome by the way.
 
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
