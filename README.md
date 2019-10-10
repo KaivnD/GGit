@@ -1,6 +1,7 @@
 ﻿# GGit
 > Git integration for Grasshopper user, no need to install git
 
+[![Build status](https://ci.appveyor.com/api/projects/status/pajvw5ie97vyghda/branch/master?svg=true)](https://ci.appveyor.com/project/KaivnD/ggit/branch/master)
 
 This plugin can make grasshopper get version control super power right away
 
