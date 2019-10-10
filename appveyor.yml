@@ -5,3 +5,11 @@ before_build:
 build:
   project: GGit.sln
   verbosity: minimal
+artifacts:
+- path: GGit/bin
+  name: GGit
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: wBRUgTcJLpK8LROfc4ufglCXIHsnxm/e4t5wWK4jgA+R16mIyZMCsajXNNuzwFDt
+  draft: true
