@@ -172,8 +172,7 @@
   </Target>
   -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
-Erase "$(TargetPath)"</PostBuildEvent>
+    <PostBuildEvent>pwsh -ExecutionPolicy ByPass -file $(SolutionDir)\scripts\after-build.ps1 -targetDir $(TargetDir) -targetDll $(TargetPath) -ci "$(CI)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <FallbackCulture>en-US</FallbackCulture>
